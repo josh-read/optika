@@ -2,7 +2,14 @@
 name = "optika"
 version = "0.1.0"
 edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+description = "Non-sequential ray tracer for optical system design"
+documentation = "https://docs.rs/optika"
+readme = "README.md"
+homepage = "https://docs.rs/optika"
+repository = "https://github.com/josh-read/optika/"
+license = "MIT"
+license-file = "LICENSE.md"
+keywords = ["non", "sequential", "optical", "system", "design"]
+categories = ["science", "command-line-utilities", "graphics"]
 
 [dependencies]
