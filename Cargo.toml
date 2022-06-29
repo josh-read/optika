@@ -8,7 +8,7 @@ readme = "README.md"
 homepage = "https://docs.rs/optika"
 repository = "https://github.com/josh-read/optika/"
 license = "MIT"
-license-file = "LICENSE.md"
+license-file = "LICENSE"
 keywords = ["non", "sequential", "optical", "system", "design"]
 categories = ["science", "command-line-utilities", "graphics"]
 
