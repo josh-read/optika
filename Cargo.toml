@@ -12,3 +12,11 @@ keywords = ["optical", "system", "design"]
 categories = ["science", "command-line-utilities", "graphics"]
 
 [dependencies]
+
+[lib]
+name = "optika"
+path = "src/lib/lib.rs"
+
+[[bin]]
+name = "main"
+path = "src/bin/main.rs"
