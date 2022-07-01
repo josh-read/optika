@@ -12,6 +12,7 @@ keywords = ["optical", "system", "design"]
 categories = ["science", "command-line-utilities", "graphics"]
 
 [dependencies]
+nalgebra = "0.31.0"
 
 [lib]
 name = "optika"
