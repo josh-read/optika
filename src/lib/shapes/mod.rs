@@ -10,6 +10,10 @@ pub trait Shape {
     fn normal(&self, position: Vector3<f64>) -> Vector3<f64> {
         unimplemented!()
     }
+
+    fn centre(&self) -> Vector3<f64> {
+        unimplemented!()
+    }
 }
 
 pub mod sphere;
