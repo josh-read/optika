@@ -4,6 +4,7 @@ pub fn say_hello() {
 
 pub mod ray;
 pub mod shapes;
+pub mod materials;
 
 pub use ray::*;
 pub use shapes::*;

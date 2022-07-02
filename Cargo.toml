@@ -13,6 +13,7 @@ categories = ["science", "command-line-utilities", "graphics"]
 
 [dependencies]
 nalgebra = "0.31.0"
+approx = "0.5.1"
 
 [lib]
 name = "optika"
