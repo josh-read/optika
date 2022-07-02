@@ -13,5 +13,7 @@ pub trait Shape {
 }
 
 pub mod sphere;
+pub mod plane;
 
 pub use sphere::Sphere;
+pub use plane::Plane;
