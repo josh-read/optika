@@ -2,9 +2,9 @@ use nalgebra::Vector3;
 
 #[derive(Debug, Copy, Clone)]
 pub struct Ray {
-    origin: Vector3<f64>,
-    direction: Vector3<f64>,
-    n: f64, // track the medium that the ray is currently in
+    pub origin: Vector3<f64>,
+    pub direction: Vector3<f64>,
+    pub(crate) n: f64, // track the medium that the ray is currently in
 }
 
 impl Ray {
