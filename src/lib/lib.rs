@@ -3,3 +3,4 @@ pub fn say_hello() {
 }
 
 pub mod ray;
+pub mod shapes;
