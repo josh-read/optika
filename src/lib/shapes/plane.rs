@@ -54,7 +54,7 @@ impl Shape for Plane {
         }
     }
 
-    fn normal(&self, position: Vector3<f64>) -> Vector3<f64> {
+    fn normal(&self, _position: Vector3<f64>) -> Vector3<f64> {
         self.normal
     }
 

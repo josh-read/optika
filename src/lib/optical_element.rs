@@ -38,12 +38,11 @@ impl OpticalElement {
             },
             Absorb => None,
             Transmit => {
-                let ray_intersection_position: Vector3<f64> = input_ray.position_at(t);
                 let ray = self.surface_properties.refract(input_ray, t, &self.shape);
                 Some(ray)
             },
         }
     }
 
-    pub fn branching_ray(&self, input_ray: Ray) -> Vec<Ray> {todo!()}
+    pub fn branching_ray(&self, _input_ray: Ray) -> Vec<Ray> {todo!()}
 }
