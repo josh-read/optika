@@ -1,5 +1,5 @@
 use super::Shape;
-use crate::ray::Ray;
+use crate::Ray;
 use nalgebra::Vector3;
 
 pub struct Sphere {

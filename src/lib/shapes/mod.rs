@@ -1,4 +1,4 @@
-use crate::ray::Ray;
+use crate::Ray;
 use nalgebra::Vector3;
 
 pub trait Shape {
@@ -13,3 +13,5 @@ pub trait Shape {
 }
 
 pub mod sphere;
+
+pub use sphere::Sphere;
