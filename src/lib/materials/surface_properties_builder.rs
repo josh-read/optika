@@ -56,7 +56,7 @@ impl SurfaceBuilder {
         Ok(infer_primary_behaviour(r, a, t))
     }
 
-    fn rat_sum(self) -> Option<f64> {
+    fn rat_sum(&self) -> Option<f64> {
         let (r, a, t) = self.rat?;
         Some(r + a + t)
     }
@@ -78,9 +78,14 @@ impl SurfaceBuilder {
             self.infer_primary_behaviour()?
         };
         // check rat has been set, if so check it equals 1, otherwise infer from primary behaviour
-        let (reflectance, absorption, transmittance) = if let Some(_) = self.rat {
-            // TODO: check sum here
-            self.rat.unwrap()
+        let (reflectance, absorption, transmittance) = 
+        if self.rat.is_some() {
+            let rat_sum: f64 = self.rat_sum().ok_or(SurfaceBuilderError::RATSum)?;
+            if ulps_eq!(rat_sum, 1.0) {
+                self.rat.unwrap()
+            } else {
+                return Err(SurfaceBuilderError::RATSum)
+            }  
         } else {
             self.infer_rat()?
         };

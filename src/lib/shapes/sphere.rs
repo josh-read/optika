@@ -25,18 +25,12 @@ impl Shape for Sphere {
         }
         let t1: f64 = (-b + discriminant.sqrt()) / (2.0 * a);
         let t2: f64 = (-b - discriminant.sqrt()) / (2.0 * a);
-        let t = if t1 < f64::EPSILON && t2 < f64::EPSILON {
-            return None;
-        } else if t1 < f64::EPSILON && t2 >= f64::EPSILON {
-            t2
-        } else if t1 >= f64::EPSILON && t2 < f64::EPSILON {
-            t1
-        } else {
-            if t1 < t2 {
-                t1
-            } else {
-                t2
-            }
+        let greater_than_zero: (bool, bool) = (t1 > f64::EPSILON, t2 > f64::EPSILON);
+        let t = match greater_than_zero {
+            (false, false) => return None,
+            (true, false) => t1,
+            (false, true) => t2,
+            (true, true) => t1.min(t2),
         };
         Some(t)
     }
