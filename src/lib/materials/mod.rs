@@ -33,3 +33,9 @@ fn reflectance(i_r: f64, cos_theta: f64) -> f64 {
     let r_0 = ((1.0 - i_r) / (1.0 + i_r)).powi(2);
     r_0 + (1.0 - r_0) * (1.0 - cos_theta).powi(5)
 }
+
+pub mod surface_properties;
+pub mod surface_properties_builder;
+
+pub use surface_properties::*;
+pub use surface_properties_builder::*;
