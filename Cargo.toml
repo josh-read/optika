@@ -7,7 +7,6 @@ documentation = "https://docs.rs/crate/optika/latest"
 readme = "README.md"
 repository = "https://github.com/josh-read/optika/"
 license = "MIT"
-license-file = "LICENSE"
 keywords = ["optical", "system", "design"]
 categories = ["science", "command-line-utilities", "graphics"]
 
