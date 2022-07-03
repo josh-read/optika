@@ -1,5 +1,6 @@
 #![allow(dead_code)]
 
+pub mod constants;
 pub mod ray;
 pub mod shapes;
 pub mod materials;
