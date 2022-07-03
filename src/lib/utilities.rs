@@ -5,7 +5,7 @@ use nalgebra::Vector3;
 /// For a given ray, return the default basis vectors, e.g. the vertical axis points UP while the
 /// horizontal axis points to the right. In the edge case where the ray is pointing straight UP or
 /// DOWN, the vertical axis is oriented along the FORWARD axis.
-fn basis_vectors(axial_direction: &Vector3<f64>) -> (Vector3<f64>, Vector3<f64>) {
+pub fn basis_vectors(axial_direction: &Vector3<f64>) -> (Vector3<f64>, Vector3<f64>) {
     debug_assert!(ulps_eq!(axial_direction.norm(), 1.0));
     let (right, up) = if axial_direction == &UP {
         // camera below subject
