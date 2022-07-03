@@ -66,9 +66,13 @@ impl OpticalSystem {
 
     /// Takes an input ray and returns the next ray from whichever element intersects the
     /// ray first. If the ray does not intersect any elements or is absorbed then return `None`.
-    pub fn trace_construction_ray(&self, ray: Ray) -> Option<Ray> {
+    pub fn trace_construction_ray(&self, ray: Ray) -> Option<(usize, Ray)> {
         let (i, t) = self.closest_element(&ray)?;
         let closest_element = &self.elements[i];
-        closest_element.construction_ray(ray, t)
+        if let Some(ray) = closest_element.construction_ray(ray, t) {
+            Some((i, ray))
+        } else {
+            None
+        }
     }
 }
