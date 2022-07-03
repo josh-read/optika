@@ -75,4 +75,21 @@ impl OpticalSystem {
             None
         }
     }
+
+    /// Records the intersected elements and spawned rays by an input ray
+    fn log_path(&self, ray: Ray) -> (Vec<usize>, Vec<Ray>) {
+        let mut indices: Vec<usize> = Vec::new();
+        let mut rays: Vec<Ray> = Vec::new();
+        let mut ray = ray;
+        loop {
+            if let Some((i, r)) = self.trace_construction_ray(ray) {
+                indices.push(i);
+                rays.push(r);
+                ray = r;
+            } else {
+                break
+            }
+        }
+        (indices, rays)
+    }
 }
