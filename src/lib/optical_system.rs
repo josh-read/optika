@@ -44,7 +44,31 @@ impl OpticalSystem {
         }
     }
 
-    pub fn trace_ray(&self) {
-        todo!()
+    /// For a given ray return the index and distance to the closest element in the system. If the
+    /// ray does not intersect any elements, return `None`.
+    fn closest_element(&self, ray: &Ray) -> Option<(usize, f64)> {
+        let mut closest_i: Option<usize> = None;
+        let mut closest_t = f64::INFINITY;
+        for (i, e) in self.elements.iter().enumerate() {
+            let t = e.shape.intersection(&ray).unwrap_or(f64::INFINITY);
+            if t < closest_t {
+                closest_i = Some(i);
+                closest_t = t;
+            }
+            closest_t = t.min(closest_t)
+        }
+        if let Some(i) = closest_i {
+            Some((i, closest_t))
+        } else {
+            None
+        }
+    }
+
+    /// Takes an input ray and returns the next ray from whichever element intersects the
+    /// ray first. If the ray does not intersect any elements or is absorbed then return `None`.
+    pub fn trace_construction_ray(&self, ray: Ray) -> Option<Ray> {
+        let (i, t) = self.closest_element(&ray)?;
+        let closest_element = &self.elements[i];
+        closest_element.construction_ray(ray, t)
     }
 }
