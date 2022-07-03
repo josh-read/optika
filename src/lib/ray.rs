@@ -16,6 +16,16 @@ impl Ray {
     pub fn new(origin: Vector3<f64>, direction: Vector3<f64>, n: f64) -> Ray {
         Ray { origin, direction, n }
     }
+
+    pub fn with_angle(&self, angle: f64, meridional_axis: Vector3<f64>) -> Ray {
+        let direction = {
+            let parallel = angle.cos() * self.direction;
+            let perpendicular = angle.sin() * meridional_axis;
+            parallel + perpendicular
+        };
+        Ray::new(self.origin, direction, self.n)
+    }
+
     /// Returns the ray's position after it has propagated a distance `t`.
     pub fn position_at(&self, t: f64) -> Vector3<f64> {
         self.origin + t * self.direction
