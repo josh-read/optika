@@ -1,5 +1,6 @@
 use crate::*;
 use nalgebra::Vector3;
+use std::fmt;
 
 #[derive(Debug)]
 struct ApertureStop {
@@ -91,5 +92,21 @@ impl OpticalSystem {
             }
         }
         (indices, rays)
+    }
+}
+
+impl fmt::Debug for OpticalSystem {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let mut output = String::new();
+        output.push_str(&format!("Traceable system with {} elements:", self.elements.len()));
+        for (i, e) in self.elements.iter().enumerate() {
+            let z = e.shape.centre()[2];
+            if let DielectricProperties::ThinLens(f) = e.surface_properties.dielectric_properties {
+                output.push_str(&format!("\ni = {}, z = {}, f = {}", i, z, f));
+            } else {
+                output.push_str(&format!("\ni = {}, z = {}", i, z));
+            };
+        }
+        write!(f, "{}", output)
     }
 }

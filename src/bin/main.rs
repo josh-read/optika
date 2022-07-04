@@ -20,5 +20,6 @@ fn main() {
         AXIAL,
         1e-6
     );
+    println!("{:?}", os);
     println!("{:?}", os.trace_construction_ray(AXIAL));
 }

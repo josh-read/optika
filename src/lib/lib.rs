@@ -10,7 +10,7 @@ pub mod utilities;
 
 pub use ray::Ray;
 pub use shapes::*;
-pub use materials::SurfaceProperties;
+pub use materials::*;
 pub use optical_element::OpticalElement;
 pub use optical_system::OpticalSystem;
 pub use utilities::*;
