@@ -110,3 +110,56 @@ impl fmt::Debug for OpticalSystem {
         write!(f, "{}", output)
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::constants::*;
+    use super::*;
+
+    fn setup() -> OpticalSystem {
+        let lens_1 = OpticalElement::new_thin_lens(
+            100.0 * FORWARD,
+            BACKWARD,
+            100.0,
+            Some(50.0)
+        );
+        let lens_2 = OpticalElement::new_thin_lens(
+            400.0 * FORWARD,
+            BACKWARD,
+            200.0,
+            Some(50.0)
+        );
+        let lens_3 = OpticalElement::new_thin_lens(
+            650.0 * FORWARD,
+            BACKWARD,
+            50.0,
+            Some(25.0)
+        );
+        let lens_4 = OpticalElement::new_thin_lens(
+            800.0 * FORWARD,
+            BACKWARD,
+            100.0,
+            Some(50.0)
+        );
+        let elements: Vec<OpticalElement> = vec![lens_1, lens_2, lens_3, lens_4];
+        OpticalSystem::new(
+            elements,
+            AXIAL,
+            1e-6
+        )
+    }
+
+    #[test]
+    fn closest() {
+        let os = setup();
+        let res = os.closest_element(&AXIAL).unwrap();
+        assert_eq!(res, (0, 100.0));
+    }
+
+    #[test]
+    fn trace_construction() {
+        let os = setup();
+        let res = os.trace_construction_ray(AXIAL).unwrap();
+        assert_eq!(res, (0, Ray::new(100.0 * FORWARD, FORWARD, 1.0)));
+    }
+}
