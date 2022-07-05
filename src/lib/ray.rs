@@ -1,4 +1,5 @@
 use nalgebra::Vector3;
+use std::ops::Neg;
 
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub struct Ray {
@@ -29,5 +30,27 @@ impl Ray {
     /// Returns the ray's position after it has propagated a distance `t`.
     pub fn position_at(&self, t: f64) -> Vector3<f64> {
         self.origin + t * self.direction
+    }
+}
+
+impl Neg for Ray {
+    type Output = Ray;
+
+    fn neg(self) -> Self::Output {
+        let Ray{ origin, direction, n } = self;
+        Ray::new(origin, -direction, n)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::constants::*;
+    use super::*;
+
+    #[test]
+    fn negative() {
+        let ray = Ray::new(ORIGIN, FORWARD, 1.0);
+        let reversed_direction = (-ray).direction;
+        assert_eq!(reversed_direction, BACKWARD)
     }
 }
