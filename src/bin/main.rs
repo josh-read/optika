@@ -15,7 +15,7 @@ fn main() {
         Some(50.0)
     );
     let elements: Vec<OpticalElement> = vec![lens_1, lens_2];
-    let os = OpticalSystem::new(
+    let mut os = OpticalSystem::new(
         elements,
         AXIAL,
         1e-6

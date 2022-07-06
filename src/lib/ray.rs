@@ -32,6 +32,14 @@ impl Ray {
         debug_assert!(t > 0.0);
         self.origin + t * self.direction
     }
+
+    /// Returns the ray's length `t` when it intersects with `point`.
+    pub fn plane_intersects(&self, point: &Vector3<f64>) -> f64 {
+        let p = point;
+        let u = self.origin;
+        let v = self.direction;
+        (p - u).dot(&v) / v.dot(&v)
+    }
 }
 
 impl Neg for Ray {
