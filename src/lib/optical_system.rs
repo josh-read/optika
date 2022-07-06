@@ -149,13 +149,13 @@ mod tests {
     use super::*;
 
     fn setup() -> OpticalSystem {
-        let lens_1 = OpticalElement::new_thin_lens(
+        let lens_2 = OpticalElement::new_thin_lens(
             100.0 * FORWARD,
             BACKWARD,
             100.0,
             Some(50.0)
         );
-        let lens_2 = OpticalElement::new_thin_lens(
+        let lens_1 = OpticalElement::new_thin_lens(
             400.0 * FORWARD,
             BACKWARD,
             200.0,
@@ -185,13 +185,20 @@ mod tests {
     fn closest() {
         let os = setup();
         let res = os.closest_element(&AXIAL).unwrap();
-        assert_eq!(res, (0, 100.0));
+        assert_eq!(res, (1, 100.0));
     }
 
     #[test]
     fn trace_construction() {
         let os = setup();
-        let res = os.trace_construction_ray(AXIAL).unwrap();
-        assert_eq!(res, (0, Ray::new(100.0 * FORWARD, FORWARD, 1.0)));
+        let res = os.trace_construction_ray(AXIAL);
+        assert_eq!(res, Some((1, Ray::new(100.0 * FORWARD, FORWARD, 1.0))));
+    }
+
+    #[test]
+    fn trace_construction_should_fail() {
+        let os = setup();
+        let res = os.trace_construction_ray(-AXIAL);
+        assert_eq!(res, None);
     }
 }
