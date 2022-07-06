@@ -82,11 +82,13 @@ impl OpticalSystem {
         let mut indices: Vec<usize> = Vec::new();
         let mut rays: Vec<Ray> = Vec::new();
         let mut ray = ray;
-        loop {
-            if let Some((i, r)) = self.trace_construction_ray(ray) {
+        while let Some((i, r)) = self.trace_construction_ray(ray) {
                 indices.push(i);
                 rays.push(r);
                 ray = r;
+        }
+        (indices, rays)
+    }
             } else {
                 break
             }
