@@ -57,7 +57,6 @@ impl OpticalSystem {
                 closest_i = Some(i);
                 closest_t = t;
             }
-            closest_t = t.min(closest_t)
         }
         if let Some(i) = closest_i {
             Some((i, closest_t))
@@ -84,9 +83,9 @@ impl OpticalSystem {
         let mut rays: Vec<Ray> = Vec::new();
         let mut ray = ray;
         while let Some((i, r)) = self.trace_construction_ray(ray) {
-                indices.push(i);
-                rays.push(r);
-                ray = r;
+            indices.push(i);
+            rays.push(r);
+            ray = r;
         }
         (indices, rays)
     }
