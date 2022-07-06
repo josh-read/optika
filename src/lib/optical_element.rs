@@ -17,7 +17,7 @@ impl OpticalElement {
     pub fn new_thin_lens(centre: Vector3<f64>, normal: Vector3<f64>, focal_length: f64, diameter: Option<f64>) -> OpticalElement {
         let mut plane = Plane::new(centre, normal);
         if let Some(d) = diameter {
-            plane.with_radius(d)
+            plane = plane.with_radius(d)
         };
         let shape = Box::new(plane);
         let surface_properties = SurfaceProperties::new().thin_lens(focal_length).build().unwrap();

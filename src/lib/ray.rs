@@ -29,6 +29,7 @@ impl Ray {
 
     /// Returns the ray's position after it has propagated a distance `t`.
     pub fn position_at(&self, t: f64) -> Vector3<f64> {
+        debug_assert!(t > 0.0);
         self.origin + t * self.direction
     }
 }

@@ -25,8 +25,9 @@ impl Plane {
         }
     }
 
-    pub fn with_radius(&mut self, radius: f64) {
-        self.bounds = PlaneBounds::Circular { radius }
+    pub fn with_radius(mut self, radius: f64) -> Self {
+        self.bounds = PlaneBounds::Circular { radius };
+        self
     }
 }
 
@@ -41,6 +42,9 @@ impl Shape for Plane {
         }
         let numerator = (self.centre - ray.origin).dot(&n);
         let t = numerator / ray_projection_along_normal;
+        if t <= 0.0 {
+            return None;
+        }
         match self.bounds {
             PlaneBounds::None => Some(t),
             PlaneBounds::Circular { radius } => {
@@ -61,4 +65,29 @@ impl Shape for Plane {
     fn centre(&self) -> Vector3<f64> {
         self.centre
     }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::constants::*;
+    use super::*;
+
+    fn setup() -> Plane {
+        Plane::new(100.0 * FORWARD, BACKWARD).with_radius(25.0)
+    }
+
+    #[test]
+    fn test_hit() {
+        let p = setup();
+        let res = p.intersection(&AXIAL);
+        assert_eq!(res, Some(100.0));
+    }
+
+    #[test]
+    fn test_miss() {
+        let p = setup();
+        let res = p.intersection(&(-AXIAL));
+        assert_eq!(res, None);
+    }
+
 }

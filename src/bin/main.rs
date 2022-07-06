@@ -9,7 +9,7 @@ fn main() {
         Some(50.0)
     );
     let lens_2 = OpticalElement::new_thin_lens(
-        100.0 * FORWARD,
+        400.0 * FORWARD,
         BACKWARD,
         200.0,
         Some(50.0)
@@ -22,4 +22,5 @@ fn main() {
     );
     println!("{:?}", os);
     println!("{:?}", os.trace_construction_ray(AXIAL));
+    os.numerical_aperture();
 }
