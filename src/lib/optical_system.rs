@@ -1,4 +1,5 @@
 use crate::*;
+use std::f64::consts::PI;
 use nalgebra::Vector3;
 use std::fmt;
 
@@ -89,11 +90,40 @@ impl OpticalSystem {
         }
         (indices, rays)
     }
+
+    pub fn numerical_aperture(&self) {
+        // calculate basis vectors of optical system
+        let (_sagittal_axis, meridional_axis) = basis_vectors(&self.axis.direction);
+        // log the axial ray path
+        let (axial_path, _) = self.log_path(self.axis);
+        // find largest angle that follows same path
+        let mut test_angles = [0.0, (PI / 4.0), (PI / 2.0)];
+        let mut n_surfaces_before_block = 0;
+        while (test_angles[2] - test_angles[0]).abs() > self.tol {
+            // construct a ray with the test angle
+            let test_ray = self.axis.with_angle(test_angles[1], meridional_axis);
+            // test ray by tracing sequentially through the system
+            let (test_path, _) = self.log_path(test_ray);
+            if test_path == axial_path {
+                test_angles[0] = test_angles[1];
             } else {
-                break
+                n_surfaces_before_block = test_path.len();
+                test_angles[2] = test_angles[1]
             }
+            // select next test angle
+            test_angles[1] = (test_angles[0] + test_angles[2]) / 2.0;
         }
-        (indices, rays)
+        // follow ray through to marginal surface
+        let marginal_ray = self.axis.with_angle(test_angles[0], meridional_axis);
+        let blocked_ray = {
+            let mut ray = marginal_ray;
+            for _ in 0..n_surfaces_before_block {
+                ray = self.trace_construction_ray(ray).unwrap().1;
+            }
+            ray
+        };
+        let aperture_stop_position = blocked_ray.origin;
+        println!("{:?}", aperture_stop_position);
     }
 }
 
